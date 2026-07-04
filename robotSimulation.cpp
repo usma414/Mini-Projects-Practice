@@ -12,6 +12,7 @@ private:
     int x_cord;
     int y_cord;
     int battery_life;
+    int step_count = 0;
 
     bool consumeEnergy() {
 
@@ -41,6 +42,17 @@ private:
             cout << "Obstackle/Boundary reach..Cannot Move" << endl;
             return false;
         }
+    }
+
+    void logTelemetry() {
+
+        std:: ofstream logFile("telemetry.csv", std::ios::app) ;
+
+        if(logFile.is_open()) {
+            logFile << step_count << "," << x_cord << "," << y_cord << "," << battery_life << "\n";
+            logFile.close();
+        }
+        step_count ++;
     }
 
 public:
@@ -109,6 +121,8 @@ public:
             return;
         }
 
+        initTelemetry();
+
         string line;
         getline(file, line);
 
@@ -130,10 +144,12 @@ public:
         cout << "🚀 STARTING DELIVERY: Package " << id << " to (" << targetX << ", " << targetY << ")" << endl;
         cout << "=========================================" << endl;
 
+        logTelemetry();
+
         while (x_cord != targetX || y_cord != targetY)
         {
         
-            while(x_cord != targetX) {
+            if(x_cord != targetX) {
                 if (x_cord < targetX) {
                     moveRight();
                 } else {
@@ -141,7 +157,7 @@ public:
                 }
             }
 
-            while (y_cord != targetY) {
+            else if(y_cord != targetY) {
                 if (y_cord < targetY){
                     moveUp();
                 } else {
@@ -149,6 +165,8 @@ public:
                 }
                 
             }
+
+            logTelemetry();
         
         }
         cout << "✅ Package " << id << " delivered successfully!" << endl;
@@ -156,6 +174,20 @@ public:
         }
 
         file.close();
+    }
+
+    void initTelemetry() {
+
+        std::ofstream logFile("telemetry.csv");
+
+        if(logFile.is_open()) {
+            //Writinh header files
+            logFile << "Step,X,Y,Battery\n";
+            logFile.close();
+            cout << "Telemetry system Initialized...Tracking ready" << endl;
+        } else {
+            cout << "Warning...Not able to initialize telemetry system." << endl;
+        }
     }
 };
 
