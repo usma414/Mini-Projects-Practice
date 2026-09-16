@@ -64,6 +64,7 @@ public:
 
     void addStudent(Student s) {
         students.push_back(s);
+        cout<< "Student Added successfully!" << endl;
     }
 
     void displayStudents() {
@@ -125,6 +126,7 @@ public:
 
                 cout << "Enter New Name: " ;
                 getline(cin, newName);
+                cin.ignore();
                 student.setName(newName);
                 cout << "Enter New Age: ";
                 cin >> newAge;
@@ -148,18 +150,78 @@ public:
 
 int main() {
 
-    Student s1(01, "Humayun", 21, 92.0);
-    Student s2(02, "Usman", 20, 91.5);
+    
+    cout<< "*****Welcome to Student Management System*****" << endl;
 
-    StudentManager manager;
+        StudentManager manager;
+        
+        while(true) {
 
-    manager.addStudent(s1);
-    manager.addStudent(s2);
+            cout<< "1. Add Student \n2. Display Students \n3. Search Student \n4. Update Student \n5. Delete Student \n6. Exit \n";
+            int choice;
+            cout << "Enter choice: " << endl;
+            cin >> choice;
+            int id;
 
-    manager.displayStudents();
-    // manager.searchStudent(2);
-    // manager.deleteStudent(1);
-    manager.updateDetails(2);
-    manager.displayStudents();
+            switch (choice) {
+
+                case 1: {
+
+                    string name;
+                    int age;
+                    double grade;
+
+                    cout << "Enter id: "<< endl;
+                    cin >> id;
+
+                    cin.ignore();
+
+                    cout << "Enter Name: "<< endl;
+                    getline(cin, name);
+
+                    cout << "Enter Age: "<< endl;
+                    cin >> age;
+
+                    cout << "Enter grade: "<< endl;
+                    cin >> grade;
+
+                    Student s(id, name, age, grade);
+                    manager.addStudent(s);
+                    
+                    break;
+                }
+
+                case 2:
+                    manager.displayStudents();
+                    break;
+                
+                case 3:
+                    cout << "Enter id: " << endl;
+                    cin >> id;
+                    manager.searchStudent(id);
+                    break;
+
+                case 4:
+                    cout << "Enter id: "<< endl;
+                    cin >> id;
+                    manager.updateDetails(id);
+                    break;
+
+                case 5:
+                    cout << "Enter id: " << endl;
+                    cin >> id;
+                    manager.deleteStudent(id);
+                    break;
+
+                case 6:
+                    cout << "Program Ended" << endl;
+                    return 0;
+                    
+                default:
+                    cout<< "Invalid input" << endl;
+            }   
+
+
+    }
 }
 
