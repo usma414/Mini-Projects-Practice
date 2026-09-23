@@ -101,7 +101,6 @@ public:
         } else {
             cout<< "Player Not Found" << endl;
         }
-
     }
 
     void sortByGoals() {
@@ -206,3 +205,48 @@ public:
         
     }
 };
+
+
+int main() {
+
+    Player p1("Lionel Messi", "Arg", 34, 22);
+    Player p2("Cristiano Ronaldo", "Por", 31, 04);
+    Player p3("Erling Haaland", "Nor", 29, 03);
+    Player p4("Kylian Mbappe", "Fra", 30, 06);
+    Player p5("Lamine Yamal", "Esp", 25, 17);
+    Player p6("Harry Kane", "Eng", 30, 11);
+    Player p7("Raphinha", "Bra", 23, 11);
+
+
+    PlayerAnalyzer analyzer;
+
+    analyzer.addPlayer(p1);
+    analyzer.addPlayer(p2);
+    analyzer.addPlayer(p3);
+    analyzer.addPlayer(p4);
+    analyzer.addPlayer(p5);
+    analyzer.addPlayer(p6);
+    analyzer.addPlayer(p7);
+    
+    // analyzer.displayPlayers();
+    // analyzer.sortByGoals();
+    // analyzer.displayPlayers();
+
+    // analyzer.searchPlayerFast("Harry Kane");
+    analyzer.addMatchEvent("Goal - Lionel Messi");
+    analyzer.addMatchEvent("Yellow Card - Kylian Mbappe");
+    analyzer.addMatchEvent("Goal - Cristiano Ronaldo");
+
+    // cout << analyzer.getRecentEvent();
+    analyzer.removeRecentEvent();
+    cout << analyzer.getRecentEvent();
+    cout << endl;
+    analyzer.addSubstitution("Frienkie De Jong");
+    analyzer.processSubstitution();
+    
+    analyzer.topScorer();
+    
+
+
+
+}
